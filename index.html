@@ -11,13 +11,13 @@
       type="text/javascript"
       src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"
     ></script>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <a-scene
-      vr-mode-ui="enabled: false"
-      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false"
-      renderer="antialias: true; alpha: true"
-    >
+    <nav class="navBar">
+      <p class="navHeader">ARmaster</p>
+    </nav>
+    <a-scene embedded arjs vr-mode-ui="enabled: false">
       <a-camera
         look-controls-enabled="false"
         arjs-device-orientation-controls="smoothingFactor: 0.1"
@@ -34,8 +34,7 @@
         gltf-model="./assets/magnemite/scene.gltf"
         rotation="0 180 0"
         scale="0.15 0.15 0.15"
-        gps-entity-place="longitude: 47.323848; latitude: 9.597078;"
-        animation-mixer
+        gps-new-entity-place="longitude: 46.320848; latitude: 10.590078;"
       />
       <a-marker preset="hiro">
         <a-entity
@@ -44,6 +43,7 @@
           gltf-model="./assets/trex/scene.gltf"
         ></a-entity>
       </a-marker>
+      <a-entity camera></a-entity>
     </a-scene>
   </body>
 </html>

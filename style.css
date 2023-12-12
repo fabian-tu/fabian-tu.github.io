@@ -1,13 +1,17 @@
+body {
+  margin: 0;
+}
+
 .navBar {
-    background-color: blue;
+  background-color: blue;
 }
 
 .navHeader {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: xx-large;
-    font-weight: bold;
-    color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: xx-large;
+  font-weight: bold;
+  color: white;
 
-    padding: 2rem;
-    margin: 0;
+  padding: 2rem;
+  margin: 0;
 }
