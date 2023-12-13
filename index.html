@@ -7,24 +7,33 @@
       type="text/javascript"
       src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-threex-location-only.js"
     ></script>
-    <script
-      type="text/javascript"
-      src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"
-    ></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <nav class="navBar">
+    <!-- <nav class="navBar">
       <p class="navHeader">ARmaster</p>
-    </nav>
-    <a-scene embedded arjs vr-mode-ui="enabled: false">
-      <a-camera
-        look-controls-enabled="false"
-        arjs-device-orientation-controls="smoothingFactor: 0.1"
-        gps-new-camera="gpsMinDistance: 5"
-      >
-      </a-camera>
-      <a-entity
+    </nav> -->
+    <a-scene
+      embedded
+      vr-mode-ui="enabled: false"
+      arjs
+      renderer="antialias: true; alpha: true"
+    >
+      <!-- <a-camera camera gps-new-camera="gpsMinDistance: 5"></a-camera> -->
+
+      <!-- Markers -->
+      <a-marker preset="hiro">
+        <a-entity
+          position="0 0 0"
+          scale="0.05 0.05 0.05"
+          gltf-model="./assets/trex/scene.gltf"
+        ></a-entity>
+      </a-marker>
+      <a-entity camera></a-entity>
+
+      <!-- Location based -->
+      <!-- <a-entity
         material="color: red"
         geometry="primitive: box"
         gps-new-entity-place="latitude: 47.325848; longitude: 9.599078;"
@@ -35,15 +44,7 @@
         rotation="0 180 0"
         scale="0.15 0.15 0.15"
         gps-new-entity-place="longitude: 46.320848; latitude: 10.590078;"
-      />
-      <a-marker preset="hiro">
-        <a-entity
-          position="0 0 0"
-          scale="0.05 0.05 0.05"
-          gltf-model="./assets/trex/scene.gltf"
-        ></a-entity>
-      </a-marker>
-      <a-entity camera></a-entity>
+      /> -->
     </a-scene>
   </body>
 </html>
