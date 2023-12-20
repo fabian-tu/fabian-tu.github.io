@@ -4,15 +4,26 @@
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <link rel="stylesheet" href="style.css" />
   <body style="margin: 0px; overflow: hidden">
-    <a-scene embedded arjs>
+    <a-scene embedded vr-mode-ui="enabled: false" arjs="sourceType: webcam;">
+      <a-entity
+        gps-projected-camera="simulateLatitude: 51.049; simulateLongitude: -0.723"
+        rotation-reader
+      ></a-entity>
+
       <a-marker preset="hiro">
+        <!-- Marker-based AR content -->
         <a-entity
           position="0 0 0"
           scale="0.05 0.05 0.05"
           gltf-model="./assets/trex/scene.gltf"
-        ></a-entity>
+        />
       </a-marker>
-      <a-entity camera></a-entity>
+
+      <a-box
+        gps-projected-entity-place="latitude: 51.0486; longitude: -0.7226"
+        material="color: red"
+        scale="10 10 10"
+      />
     </a-scene>
   </body>
 </html>
