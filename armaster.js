@@ -1,25 +1,22 @@
-document.addEventListener("DOMContentLoaded", () => {
-  let currentMarker = null;
-  const sceneEl = document.getElementById("sceneEl");
-
-  const trexText = "This is a Trex!";
-  const magnemiteText = "This is the Pokemon Magnemite!";
-
-  // Log current location
-  if (navigator.geolocation) {
-    navigator.geolocation.watchPosition((position) => {
-      console.log(
-        "Latitude: " +
-          position.coords.latitude +
-          ", Longitutde: " +
-          position.coords.longitude
-      );
-    }, showError);
-  } else {
-    console.log("Geolocation is not supported by this browser.");
-  }
-
-  function showError(error) {
+AFRAME.registerComponent("log-coordinates", {
+  init: function () {
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition((position) => {
+        console.log(
+          "Latitude: " +
+            position.coords.latitude +
+            ", Longitutde: " +
+            position.coords.longitude
+        );
+      }, this.showError);
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  },
+  remove: function () {
+    navigator.geolocation.clearWatch();
+  },
+  showError: function (error) {
     switch (error.code) {
       case error.PERMISSION_DENIED:
         console.log("User denied the request for Geolocation.");
@@ -34,23 +31,90 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("An unknown error occurred.");
         break;
     }
-  }
+  },
+});
 
-  // Handle clicks on AR Elements
-  sceneEl.addEventListener("click", handleTap);
+AFRAME.registerComponent("click-detector", {
+  init: function () {
+    this.currentMarker = null;
 
-  sceneEl.addEventListener("markerFound", (e) => {
-    currentMarker = e.target.id;
-  });
+    this.handleMarkerFound = this.handleMarkerFound.bind(this);
+    this.handleMarkerLost = this.handleMarkerLost.bind(this);
+    this.handleTap = this.handleTap.bind(this);
 
-  sceneEl.addEventListener("markerLost", (e) => {
-    currentMarker = null;
-  });
+    this.el.addEventListener("markerFound", this.handleMarkerFound);
+    this.el.addEventListener("markerLost", this.handleMarkerLost);
+    this.el.addEventListener("click", this.handleTap);
+  },
+  remove: function () {
+    this.el.removeEventListener("markerFound", this.handleMarkerFound);
+    this.el.removeEventListener("markerLost", this.handleMarkerLost);
+    this.el.removeEventListener("click", this.handleTap);
+  },
+  handleMarkerFound: function (e) {
+    this.currentMarker = e.target;
+  },
+  handleMarkerLost: function () {
+    this.currentMarker = null;
+  },
+  handleTap: function () {
+    if (this.currentMarker) {
+      const link = this.currentMarker.getAttribute("clickable");
 
-  function handleTap() {
-    if (currentMarker) {
-      console.log(`${currentMarker}, clicked!`);
-      window.open("https://de.wikipedia.org/wiki/Tyrannosaurus", "_blank");
+      if (link) {
+        window.open(link, "_blank");
+      }
+    }
+  },
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const button = document.getElementById("fullScreenButton");
+  const navBar = document.getElementById("navBar");
+  const fullScreenElement = document.documentElement;
+
+  function openFullscreen() {
+    if (fullScreenElement.requestFullscreen) {
+      fullScreenElement.requestFullscreen();
+    } else if (fullScreenElement.webkitRequestFullscreen) {
+      /* Safari */
+      fullScreenElement.webkitRequestFullscreen();
+    } else if (fullScreenElement.msRequestFullscreen) {
+      /* IE11 */
+      fullScreenElement.msRequestFullscreen();
     }
   }
+
+  function closeFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  }
+
+  function fullscreenEnabled() {
+    return !!(
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.msFullscreenElement
+    );
+  }
+
+  function handleFullscreenChange() {
+    fullscreenEnabled()
+      ? (navBar.style.display = "none")
+      : (navBar.style.display = "block");
+  }
+
+  button.addEventListener("click", () => {
+    fullscreenEnabled() ? closeFullscreen() : openFullscreen();
+  });
+
+  document.addEventListener("fullscreenchange", handleFullscreenChange);
+  document.addEventListener("mozfullscreenchange", handleFullscreenChange);
+  document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+  document.addEventListener("msfullscreenchange", handleFullscreenChange);
 });

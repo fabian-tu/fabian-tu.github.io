@@ -9,44 +9,73 @@
     <script src="./aframe/aframe-ar.js"></script>
 
     <script src="armaster.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <a-scene
-      id="sceneEl"
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
-    >
-      <a-assets>
-        <a-asset-item id="trex" src="./assets/trex/scene.gltf" />
-        <a-asset-item id="magnemite" src="./assets/magnemite/scene.gltf" />
-      </a-assets>
+    <nav id="navBar" class="navBar">
+      <p class="navHeader">ARmaster</p>
+    </nav>
+    <main>
+      <a-scene
+        vr-mode-ui="enabled: false"
+        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+        log-coordinates
+        click-detector
+      >
+        <a-assets>
+          <a-asset-item id="trex" src="./assets/trex/scene.gltf" />
+          <a-asset-item id="magnemite" src="./assets/magnemite/scene.gltf" />
+        </a-assets>
 
-      <a-marker id="trex-marker" type="barcode" value="1">
-        <a-gltf-model
-          src="#trex"
-          scale="0.05 0.05 0.05"
-          rotation="-90 0 0"
-          position="0 0 0.4"
-        />
-        <a-entity
-          geometry="primitive: plane; width: 40; height: 0;"
-          text="value: \nTyrannosaurus (Latinisierung von altgriechisch τύραννος týrannos [„Herrscher, Despot“] sowie σαῦρος saúros [„Echse“]) ist eine Gattung bipeder, fleischfressender Dinosaurier aus der Gruppe der Theropoda.\n
-                        [Tap to see more information]\n\n;
-          color: black; zOffset: 0.5; xOffset: 0.9;"
-          material="color: white"
-          position="0 -10 0"
-        />
-      </a-marker>
+        <a-marker
+          type="barcode"
+          value="1"
+          clickable="https://de.wikipedia.org/wiki/Tyrannosaurus"
+        >
+          <a-gltf-model
+            src="#trex"
+            scale="0.05 0.05 0.05"
+            rotation="-90 0 0"
+            position="0 0 0.4"
+          />
+          <a-entity
+            geometry="primitive: plane; width: 40; height: 0;"
+            text="value: \nTyrannosaurus (Latinisierung von altgriechisch τύραννος týrannos [„Herrscher, Despot“] sowie σαῦρος saúros [„Echse“]) ist eine Gattung bipeder, fleischfressender Dinosaurier aus der Gruppe der Theropoda.\n
+                            [Tap to see more information]\n\n;
+              color: black; zOffset: 0.5; xOffset: 0.9;"
+            material="color: white"
+            position="0 -10 0"
+          />
+        </a-marker>
 
-      <a-marker id="magnemite-marker" type="barcode" value="2">
-        <a-entity
-          scale="0.05 0.05 0.05"
-          rotation="-90 0 0"
-          gltf-model="./assets/magnemite/scene.gltf"
-        />
-      </a-marker>
+        <a-marker
+          type="barcode"
+          value="2"
+          clickable="https://de.wikipedia.org/"
+        >
+          <a-entity
+            scale="0.05 0.05 0.05"
+            rotation="-90 0 0"
+            gltf-model="./assets/magnemite/scene.gltf"
+          />
+        </a-marker>
 
-      <a-entity camera></a-entity>
-    </a-scene>
+        <a-entity camera />
+      </a-scene>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        fill="currentColor"
+        viewBox="0 0 16 16"
+        id="fullScreenButton"
+      >
+        <path
+          stroke="white"
+          d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"
+        />
+      </svg>
+    </main>
   </body>
 </html>
