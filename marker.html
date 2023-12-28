@@ -43,7 +43,7 @@
             geometry="primitive: plane; width: 40; height: 0;"
             text="value: \nTyrannosaurus (Latinisierung von altgriechisch τύραννος týrannos [„Herrscher, Despot“] sowie σαῦρος saúros [„Echse“]) ist eine Gattung bipeder, fleischfressender Dinosaurier aus der Gruppe der Theropoda.\n
                             [Tap to see more information]\n\n;
-              color: black; zOffset: 0.5; xOffset: 0.9;"
+                    color: black; zOffset: 0.5; xOffset: 0.9;"
             material="color: white"
             position="0 -10 0"
           />
@@ -52,12 +52,21 @@
         <a-marker
           type="barcode"
           value="2"
-          clickable="https://de.wikipedia.org/"
+          clickable="https://www.pokewiki.de/Magnetilo"
         >
-          <a-entity
-            scale="0.05 0.05 0.05"
+          <a-gltf-model
+            src="#magnemite"
+            scale="0.1 0.1 0.1"
             rotation="-90 0 0"
-            gltf-model="./assets/magnemite/scene.gltf"
+            position="0 0 0.4"
+          />
+          <a-entity
+            geometry="primitive: plane; width: 40; height: 0;"
+            text="value: \nMagnetilo ist ein Pokémon mit den Typen Elektro und Stahl und existiert seit der ersten Spielgeneration. Vor Veröffentlichung der zweiten Spielgeneration besaß es ausschließlich den Typ Elektro.\n
+                        [Tap to see more information]\n\n;
+                    color: black; zOffset: 0.5; xOffset: 0.9;"
+            material="color: white"
+            position="0 -10 0"
           />
         </a-marker>
 
