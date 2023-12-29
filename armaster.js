@@ -1,6 +1,6 @@
 AFRAME.registerComponent("log-coordinates", {
   init: function () {
-    this.gpsEl = document.querySelector("[gps-new-camera]");
+    this.gpsEl = document.querySelector("[gps-camera]");
 
     if (this.gpsEl) {
       this.gpsEl.addEventListener(
