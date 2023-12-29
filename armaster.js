@@ -1,7 +1,13 @@
 AFRAME.registerComponent("log-coordinates", {
   init: function () {
     this.gpsEl = document.querySelector("[gps-new-camera]");
-    this.gpsEl.addEventListener("gps-camera-update-position", this.onGpsUpdate);
+
+    if (this.gpsEl) {
+      this.gpsEl.addEventListener(
+        "gps-camera-update-position",
+        this.onGpsUpdate
+      );
+    }
 
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition((position) => {

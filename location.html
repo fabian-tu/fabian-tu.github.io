@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <a-scene
+    <!-- <a-scene
       vr-mode-ui="enabled: false"
       arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false"
       renderer="antialias: true; alpha: true"
@@ -30,6 +30,20 @@
         gps-new-entity-place="latitude: 51.0491; longitude: -0.723;"
         scale="10 10 10"
       ></a-entity>
+    </a-scene> -->
+    <a-scene
+      vr-mode-ui="enabled: false"
+      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+      log-coordinates
+    >
+      <a-entity
+        id="marker"
+        material="color: red"
+        geometry="primitive: box"
+        gps-entity-place="latitude: 51.0491; longitude: -0.723;"
+        scale="10 10 10"
+      ></a-entity>
+      <a-camera id="camera" gps-camera rotation-reader> </a-camera>
     </a-scene>
     <script>
       const camera = document.getElementById("camera");
