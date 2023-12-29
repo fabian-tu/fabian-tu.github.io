@@ -7,7 +7,6 @@
 
     <script src="./aframe/aframe.min.js"></script>
     <script src="./aframe/aframe-ar.js"></script>
-    <script src="./aframe/ar-threex-location-only.js"></script>
 
     <script src="armaster.js"></script>
 
@@ -22,13 +21,13 @@
     >
       <a-camera
         id="camera"
-        gps-new-camera="gpsMinDistance: 5; simulateLatitude: 47.324852; simulateLongitude: 9.598081; positionMinAccuracy: 1000;"
+        gps-new-camera="gpsMinDistance: 5; simulateLatitude: 51.049; simulateLongitude: -0.723;"
       ></a-camera>
       <a-entity
         id="marker"
         material="color: red"
         geometry="primitive: box"
-        gps-new-entity-place="latitude: 47.324864; longitude: 9.598081"
+        gps-new-entity-place="latitude: 51.0491; longitude: -0.723;"
         scale="10 10 10"
       ></a-entity>
     </a-scene>

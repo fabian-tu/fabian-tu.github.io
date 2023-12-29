@@ -1,18 +1,31 @@
 AFRAME.registerComponent("log-coordinates", {
   init: function () {
+    this.gpsEl = document.querySelector("[gps-new-camera]");
+    this.gpsEl.addEventListener("gps-camera-update-position", this.onGpsUpdate);
+
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition((position) => {
         console.log(
-          `Latitude: ${position.coords.latitude}, Longitutde: ${position.coords.longitude}`
+          `Geolocation API Coordinates\nLatitude: ${position.coords.latitude}, Longitutde: ${position.coords.longitude}`
         );
-        console.log(`Accuracy: ${position.coords.accuracy}`);
+        console.log(`Geolocation API Accuracy: ${position.coords.accuracy}`);
       }, this.showError);
     } else {
-      console.log("Geolocation is not supported by this browser.");
+      console.log("Geolocation API is not supported by this browser.");
     }
   },
   remove: function () {
+    this.gpsEl.removeEventListener(
+      "gps-camera-update-position",
+      this.onGpsUpdate
+    );
+
     navigator.geolocation.clearWatch();
+  },
+  onGpsUpdate: function (e) {
+    console.log(
+      `ar.js Coordinates\nLatitude: ${e.detail.position.latitude}, Longitude: ${e.detail.position.longitude}`
+    );
   },
   showError: function (error) {
     switch (error.code) {
