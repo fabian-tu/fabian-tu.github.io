@@ -6,6 +6,8 @@
   width: 100%;
 
   background-color: blue;
+
+  z-index: 1;
 }
 
 .navHeader {

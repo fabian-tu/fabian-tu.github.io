@@ -3,11 +3,9 @@ AFRAME.registerComponent("log-coordinates", {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition((position) => {
         console.log(
-          "Latitude: " +
-            position.coords.latitude +
-            ", Longitutde: " +
-            position.coords.longitude
+          `Latitude: ${position.coords.latitude}, Longitutde: ${position.coords.longitude}`
         );
+        console.log(`Accuracy: ${position.coords.accuracy}`);
       }, this.showError);
     } else {
       console.log("Geolocation is not supported by this browser.");
@@ -109,9 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
       : (navBar.style.display = "block");
   }
 
-  button.addEventListener("click", () => {
-    fullscreenEnabled() ? closeFullscreen() : openFullscreen();
-  });
+  if (button) {
+    button.addEventListener("click", () => {
+      fullscreenEnabled() ? closeFullscreen() : openFullscreen();
+    });
+  }
 
   document.addEventListener("fullscreenchange", handleFullscreenChange);
   document.addEventListener("mozfullscreenchange", handleFullscreenChange);
