@@ -1,0 +1,52 @@
+<a-scene
+  vr-mode-ui="enabled: false"
+  arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+  click-detector
+>
+  <a-assets>
+    <a-asset-item id="trex" src="./assets/trex/scene.gltf" />
+    <a-asset-item id="magnemite" src="./assets/magnemite/scene.gltf" />
+  </a-assets>
+
+  <a-entity
+    gps-new-entity-place="latitude: 51.05; longitude: -0.722"
+    scale="3 3 3"
+    look-at="[gps-new-camera]"
+  >
+    <a-gltf-model
+      src="#trex"
+      clickable="https://de.wikipedia.org/wiki/Tyrannosaurus"
+    >
+      <a-text
+        value="[Tap to get more information]"
+        width="50"
+        align="center"
+        position="0 -5 0"
+      ></a-text>
+    </a-gltf-model>
+  </a-entity>
+
+  <a-entity
+    gps-new-entity-place="latitude: 51.05; longitude: -0.720"
+    scale="10 10 10"
+    look-at="[gps-new-camera]"
+  >
+    <a-gltf-model
+      src="#magnemite"
+      clickable="https://www.pokewiki.de/Magnetilo"
+    >
+      <a-text
+        value="[Tap to get more information]"
+        width="50"
+        align="center"
+        position="0 -1 0"
+      ></a-text>
+    </a-gltf-model>
+  </a-entity>
+
+  <a-camera
+    gps-new-camera="gpsMinDistance: 5; simulateLatitude: 51.049; simulateLongitude: -0.723;"
+    cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 0;"
+    raycaster="objects: [clickable];"
+  ></a-camera>
+</a-scene>

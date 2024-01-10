@@ -20,7 +20,6 @@
       <a-scene
         vr-mode-ui="enabled: false"
         arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
-        log-coordinates
         click-detector
       >
         <a-assets>
@@ -38,15 +37,14 @@
             scale="0.05 0.05 0.05"
             rotation="-90 0 0"
             position="0 0 0.4"
-          />
-          <a-entity
-            geometry="primitive: plane; width: 40; height: 0;"
-            text="value: \nTyrannosaurus (Latinisierung von altgriechisch τύραννος týrannos [„Herrscher, Despot“] sowie σαῦρος saúros [„Echse“]) ist eine Gattung bipeder, fleischfressender Dinosaurier aus der Gruppe der Theropoda.\n
-                            [Tap to see more information]\n\n;
-                    color: black; zOffset: 0.5; xOffset: 0.9;"
-            material="color: white"
-            position="0 -10 0"
-          />
+          >
+            <a-text
+              value="[Tap to get more information]"
+              width="50"
+              align="center"
+              position="0 -5 0"
+            ></a-text>
+          </a-gltf-model>
         </a-marker>
 
         <a-marker
@@ -59,18 +57,21 @@
             scale="0.1 0.1 0.1"
             rotation="-90 0 0"
             position="0 0 0.4"
-          />
-          <a-entity
-            geometry="primitive: plane; width: 40; height: 0;"
-            text="value: \nMagnetilo ist ein Pokémon mit den Typen Elektro und Stahl und existiert seit der ersten Spielgeneration. Vor Veröffentlichung der zweiten Spielgeneration besaß es ausschließlich den Typ Elektro.\n
-                        [Tap to see more information]\n\n;
-                    color: black; zOffset: 0.5; xOffset: 0.9;"
-            material="color: white"
-            position="0 -10 0"
-          />
+          >
+            <a-text
+              value="[Tap to get more information]"
+              width="50"
+              align="center"
+              position="0 -1 0"
+            ></a-text>
+          </a-gltf-model>
         </a-marker>
 
-        <a-entity camera />
+        <a-entity
+          camera
+          cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 0;"
+          raycaster="objects: [clickable];"
+        ></a-entity>
       </a-scene>
       <svg
         xmlns="http://www.w3.org/2000/svg"
