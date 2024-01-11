@@ -7,6 +7,25 @@ const OUTDOOR = "OUTDOOR";
 const INDOOR = "INDOOR";
 let mode;
 
+function showError(error) {
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      alert(
+        "User denied the request for Geolocation. Application won't work properly."
+      );
+      break;
+    case error.POSITION_UNAVAILABLE:
+      alert("Location information is unavailable.");
+      break;
+    case error.TIMEOUT:
+      alert("The request to get location timed out.");
+      break;
+    case error.UNKNOWN_ERROR:
+      alert("An unknown error occurred.");
+      break;
+  }
+}
+
 if (navigator.geolocation) {
   navigator.geolocation.watchPosition((position) => {
     if (position.coords.accuracy < 10 && mode != OUTDOOR) {
@@ -16,9 +35,9 @@ if (navigator.geolocation) {
       mode = INDOOR;
       switchMode(mode);
     }
-  }, this.showError);
+  }, showError);
 } else {
-  console.log("Geolocation API is not supported by this browser.");
+  alert("Geolocation API is not supported by this browser.");
 }
 
 // Functions to handle Fullscreen
@@ -99,22 +118,6 @@ AFRAME.registerComponent("log-coordinates", {
   },
   remove: function () {
     navigator.geolocation.clearWatch();
-  },
-  showError: function (error) {
-    switch (error.code) {
-      case error.PERMISSION_DENIED:
-        console.log("User denied the request for Geolocation.");
-        break;
-      case error.POSITION_UNAVAILABLE:
-        console.log("Location information is unavailable.");
-        break;
-      case error.TIMEOUT:
-        console.log("The request to get user location timed out.");
-        break;
-      case error.UNKNOWN_ERROR:
-        console.log("An unknown error occurred.");
-        break;
-    }
   },
 });
 
