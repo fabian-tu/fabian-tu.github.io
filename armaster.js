@@ -28,7 +28,7 @@ function showError(error) {
 
 if (navigator.geolocation) {
   navigator.geolocation.watchPosition((position) => {
-    if (position.coords.accuracy < 10 && mode != OUTDOOR) {
+    if (position.coords.accuracy <= 10 && mode != OUTDOOR) {
       mode = OUTDOOR;
       switchMode(mode);
     } else if (mode != INDOOR) {
