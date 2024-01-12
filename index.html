@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>ARmaster</title>
 
     <script src="./aframe/aframe.min.js"></script>
@@ -11,8 +14,38 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <nav id="navBar" class="navBar">
-      <div class="navHeader">ARmaster</div>
+    <nav>
+      <div class="navBar">
+        <div class="navHeader">ARmaster</div>
+        <div class="toggle-wrapper">
+          <div class="auto-detect-wrapper">
+            <label class="toggleLabel" for="auto-detect"
+              >Auto-Mode-Detection</label
+            >
+            <label style="z-index: 1000" class="switch">
+              <input
+                id="auto-detect"
+                name="auto-detect"
+                type="checkbox"
+                onchange="toogleAutoDetection()"
+              />
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="mode-toggle-wrapper">
+            <label class="toggleLabel" for="mode-toggle">Mode</label>
+            <label class="switch">
+              <input
+                id="mode-toggle"
+                name="mode-toggle"
+                type="checkbox"
+                onchange="toggleMode()"
+              />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </div>
     </nav>
     <main id="main"></main>
     <div class="loader-wrapper"><div class="loader"></div></div>

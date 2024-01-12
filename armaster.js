@@ -1,11 +1,31 @@
-const button = document.getElementById("fullScreenButton");
-const navBar = document.getElementById("navBar");
-const fullScreenElement = document.documentElement;
-const mainElement = document.getElementById("main");
+let currentMode;
+let positionWatcher;
 
 const OUTDOOR = "OUTDOOR";
 const INDOOR = "INDOOR";
-let mode;
+const MAXACCURACY = 50;
+
+const fullScreenDocument = document.documentElement;
+const mainElement = document.getElementById("main");
+const navBar = document.querySelector("nav");
+const fullScreenButton = document.getElementById("fullScreenButton");
+
+const modeToggle = document.getElementById("mode-toggle");
+const autoDetectionModeToggle = document.getElementById("auto-detect");
+
+const autoDetectionModeEnabledInit = localStorage.getItem(
+  "autoDetectionModeEnabled"
+);
+const initMode = localStorage.getItem("lastMode");
+
+if (autoDetectionModeEnabledInit === "true") {
+  enableAutoDetectionMode();
+  autoDetectionModeToggle.checked = true;
+  modeToggle.disabled = true;
+} else {
+  switchMode(initMode ? initMode : INDOOR);
+  autoDetectionModeToggle.checked = false;
+}
 
 function showError(error) {
   switch (error.code) {
@@ -26,43 +46,71 @@ function showError(error) {
   }
 }
 
-if (navigator.geolocation) {
-  navigator.geolocation.watchPosition((position) => {
-    if (position.coords.accuracy <= 10 && mode != OUTDOOR) {
-      mode = OUTDOOR;
-      switchMode(mode);
-    } else if (mode != INDOOR) {
-      mode = INDOOR;
-      switchMode(mode);
-    }
-  }, showError);
-} else {
-  alert("Geolocation API is not supported by this browser.");
+// Function to switch between indoor and outdoor mode
+function switchMode(mode) {
+  console.log(`Switch: ${mode}`);
+  let arDoc;
+
+  if (mode == OUTDOOR) {
+    arDoc = "./location_part.html";
+    modeToggle.checked = false;
+  } else {
+    arDoc = "./marker_part.html";
+    modeToggle.checked = true;
+  }
+
+  currentMode = mode;
+  localStorage.setItem("lastMode", mode);
+
+  fetch(arDoc)
+    .then((response) => response.text())
+    .then((html) => {
+      mainElement.innerHTML = html;
+      const video = document.querySelector("video");
+
+      video && video.remove();
+    });
+}
+
+function toggleMode() {
+  console.log("test");
+  if (modeToggle.checked) {
+    switchMode(INDOOR);
+  } else {
+    switchMode(OUTDOOR);
+  }
+}
+
+function toogleAutoDetection() {
+  const autoDetectionModeEnabled = autoDetectionModeToggle.checked;
+  localStorage.setItem("autoDetectionModeEnabled", autoDetectionModeEnabled);
+  modeToggle.disabled = autoDetectionModeEnabled;
+
+  autoDetectionModeEnabled
+    ? enableAutoDetectionMode()
+    : navigator.geolocation.clearWatch(positionWatcher);
+}
+
+function enableAutoDetectionMode() {
+  if (navigator.geolocation) {
+    positionWatcher = navigator.geolocation.watchPosition((position) => {
+      console.log(`Accuracy: ${position.coords.accuracy}`);
+
+      if (position.coords.accuracy <= MAXACCURACY && currentMode != OUTDOOR) {
+        switchMode(OUTDOOR);
+      } else if (
+        position.coords.accuracy >= MAXACCURACY &&
+        currentMode != INDOOR
+      ) {
+        switchMode(INDOOR);
+      }
+    }, showError);
+  } else {
+    alert("Geolocation API is not supported by this browser.");
+  }
 }
 
 // Functions to handle Fullscreen
-function openFullscreen() {
-  if (fullScreenElement.requestFullscreen) {
-    fullScreenElement.requestFullscreen();
-  } else if (fullScreenElement.webkitRequestFullscreen) {
-    /* Safari */
-    fullScreenElement.webkitRequestFullscreen();
-  } else if (fullScreenElement.msRequestFullscreen) {
-    /* IE11 */
-    fullScreenElement.msRequestFullscreen();
-  }
-}
-
-function closeFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  }
-}
-
 function fullscreenEnabled() {
   return !!(
     document.fullscreenElement ||
@@ -77,9 +125,27 @@ function handleFullscreenChange() {
     : (navBar.style.display = "block");
 }
 
-if (button) {
-  button.addEventListener("click", () => {
-    fullscreenEnabled() ? closeFullscreen() : openFullscreen();
+if (fullScreenButton) {
+  fullScreenButton.addEventListener("click", () => {
+    if (fullscreenEnabled()) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    } else {
+      if (fullScreenDocument.requestFullscreen) {
+        fullScreenDocument.requestFullscreen();
+      } else if (fullScreenDocument.webkitRequestFullscreen) {
+        /* Safari */
+        fullScreenDocument.webkitRequestFullscreen();
+      } else if (fullScreenDocument.msRequestFullscreen) {
+        /* IE11 */
+        fullScreenDocument.msRequestFullscreen();
+      }
+    }
   });
 }
 
@@ -87,20 +153,6 @@ document.addEventListener("fullscreenchange", handleFullscreenChange);
 document.addEventListener("mozfullscreenchange", handleFullscreenChange);
 document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
 document.addEventListener("msfullscreenchange", handleFullscreenChange);
-
-// Function to switch between indoors and outdoors
-function switchMode(mode) {
-  const arDoc = mode == INDOOR ? "marker_part.html" : "location_part.html";
-
-  fetch(arDoc)
-    .then((response) => response.text())
-    .then((html) => {
-      mainElement.innerHTML = html;
-      const video = document.querySelector("video");
-
-      video && video.remove();
-    });
-}
 
 // register AFRAME component that logs coordinates for debugging
 AFRAME.registerComponent("log-coordinates", {
@@ -117,7 +169,7 @@ AFRAME.registerComponent("log-coordinates", {
     }
   },
   remove: function () {
-    navigator.geolocation.clearWatch();
+    navigator.geolocation.clearWatch(positionWatcher);
   },
 });
 
