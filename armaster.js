@@ -3,7 +3,7 @@ let positionWatcher;
 
 const OUTDOOR = "OUTDOOR";
 const INDOOR = "INDOOR";
-const MAXACCURACY = 50;
+const MAXACCURACY = 60;
 
 const fullScreenDocument = document.documentElement;
 const mainElement = document.getElementById("main");
@@ -18,6 +18,7 @@ const autoDetectionModeEnabledInit = localStorage.getItem(
 );
 const initMode = localStorage.getItem("lastMode");
 
+// determine mode on load
 if (autoDetectionModeEnabledInit === "true") {
   enableAutoDetectionMode();
   autoDetectionModeToggle.checked = true;
@@ -27,6 +28,7 @@ if (autoDetectionModeEnabledInit === "true") {
   autoDetectionModeToggle.checked = false;
 }
 
+// errors if navigation is unavailable
 function showError(error) {
   switch (error.code) {
     case error.PERMISSION_DENIED:
@@ -46,7 +48,7 @@ function showError(error) {
   }
 }
 
-// Function to switch between indoor and outdoor mode
+// function to switch between indoor and outdoor mode
 function switchMode(mode) {
   console.log(`Switch: ${mode}`);
   let arDoc;
@@ -72,6 +74,7 @@ function switchMode(mode) {
     });
 }
 
+// function used for the mode toggle button
 function toggleMode() {
   console.log("test");
   if (modeToggle.checked) {
@@ -81,6 +84,7 @@ function toggleMode() {
   }
 }
 
+// function used for the AutoDetect toggle button
 function toogleAutoDetection() {
   const autoDetectionModeEnabled = autoDetectionModeToggle.checked;
   localStorage.setItem("autoDetectionModeEnabled", autoDetectionModeEnabled);
