@@ -4,33 +4,12 @@
   click-detector
 >
   <a-assets>
-    <a-asset-item id="trex" src="./assets/trex/scene.gltf" />
-    <a-asset-item id="magnemite" src="./assets/magnemite/scene.gltf" />
+    <a-asset-item id="magnemite" src="../assets/magnemite/scene.gltf" />
   </a-assets>
 
   <a-marker
     type="barcode"
     value="1"
-    clickable="https://de.wikipedia.org/wiki/Tyrannosaurus"
-  >
-    <a-gltf-model
-      src="#trex"
-      scale="0.05 0.05 0.05"
-      rotation="-90 0 0"
-      position="0 0 0.4"
-    >
-      <a-text
-        value="[Tap to get more information]"
-        width="50"
-        align="center"
-        position="0 -5 0"
-      ></a-text>
-    </a-gltf-model>
-  </a-marker>
-
-  <a-marker
-    type="barcode"
-    value="2"
     clickable="https://www.pokewiki.de/Magnetilo"
   >
     <a-gltf-model
@@ -40,10 +19,13 @@
       position="0 0 0.4"
     >
       <a-text
-        value="[Tap to get more information]"
+        value="
+        Magnemite (Japanese: コイル Coil) is a dual-type Electric/Steel Pokémon introduced in Generation I. Prior to Generation II, it was a pure Electric-type Pokémon.
+        [Tap to get more information]
+        "
         width="50"
         align="center"
-        position="0 -1 0"
+        position="-25 -1 0"
       ></a-text>
     </a-gltf-model>
   </a-marker>
