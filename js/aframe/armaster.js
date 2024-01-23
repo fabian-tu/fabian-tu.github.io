@@ -76,7 +76,6 @@ function switchMode(mode) {
 
 // function used for the mode toggle button
 function toggleMode() {
-  console.log("test");
   if (modeToggle.checked) {
     switchMode(INDOOR);
   } else {
